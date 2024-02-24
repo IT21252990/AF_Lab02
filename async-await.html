@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>JS Async & Await</title>
+    <script>
+      async function fetchDataAsync(url) {
+        try {
+          // Wait for the Promise returned by fetchData to be resolved or rejected
+          const responseData = await fetchData(url);
+          console.log("Response Data:", responseData);
+        } catch (error) {
+          console.error("Error:", error);
+        }
+      }
+
+      // fetchData function returns a Promise (as defined in the previous example)
+      function fetchData(url) {
+        return new Promise(function (resolve, reject) {
+          var xhr = new XMLHttpRequest();
+          xhr.open("GET", url, true);
+          xhr.onreadystatechange = function () {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+              if (xhr.status === 200) {
+                resolve(xhr.responseText); // Resolve the promise with response data
+              } else {
+                reject("Error: " + xhr.status); // Reject the promise with an error message
+              }
+            }
+          };
+          xhr.send();
+        });
+      }
+
+      // Usage example of fetchDataAsync function
+      fetchDataAsync("https://jsonplaceholder.typicode.com/todos/1");
+    </script>
+  </head>
+  <body></body>
+</html>
