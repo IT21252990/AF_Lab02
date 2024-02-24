@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>JS Call Back</title>
+    <script>
+      function fetchData(url, callback) {
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", url, true);
+        xhr.onreadystatechange = function () {
+          if (xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {
+              callback(null, xhr.responseText); // No error, pass response data to callback
+            } else {
+              callback("Error: " + xhr.status); // Pass error to callback
+            }
+          }
+        };
+        xhr.send();
+      }
+
+      // Example of using the fetchData function with a callback function
+      function logResponse(error, responseData) {
+        if (error) {
+          console.error("Error:", error);
+        } else {
+          console.log("Response Data:", responseData);
+        }
+      }
+
+      // Usage example:
+      fetchData("https://jsonplaceholder.typicode.com/todos/1", logResponse);
+    </script>
+  </head>
+  <body></body>
+</html>
+
+<!-- <!DOCTYPE html>
+<html>
+  <body>
+    <h1>JavaScript Functions</h1>
+    <h2>Callback Functions</h2>
+
+    <p>The result of the calculation is:</p>
+    <p id="demo"></p>
+
+    <script>
+      function myDisplayer(something) {
+        document.getElementById("demo").innerHTML = something;
+      }
+
+      function myCalculator(num1, num2, myCallback) {
+        let sum = num1 + num2;
+        myCallback(sum);
+      }
+
+      myCalculator(5, 5, myDisplayer);
+    </script>
+  </body>
+</html> -->
